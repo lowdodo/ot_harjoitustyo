@@ -7,4 +7,4 @@ _Suunnitelmat voivat vielä muuttua, ja tarkempi vaatimusmäärittely tehdään 
 
 [vaatimusmäärittely](https://github.com/lowdodo/ot_harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.dm)
 
-[työaikakirjanpito] (https://github.com/lowdodo/ot_harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
+[työaikakirjanpito](https://github.com/lowdodo/ot_harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
