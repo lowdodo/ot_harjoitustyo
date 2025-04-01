@@ -1,0 +1,15 @@
+.vscode
+.DS_Store
+.coverage
+.pytest_cache
+htmlcov
+__pycache__
+*.py[cod]
+*$py.class
+.env
+
+# data files
+data/database.sqlite
+data/todos.csv
+data/test-database.sqlite
+data/test-todos.csv
