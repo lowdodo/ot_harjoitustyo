@@ -31,15 +31,20 @@ class LoginView:
 
         try:
             user = self.dayplan_service.login(username, password)
-            self._show_day_plan_view(user)
-            self._handle_login()
+            self._handle_login(user)
         except InvalidCredentialsError:
             self._show_error("Invalid username or password")
 
     def _show_day_plan_view(self, user):
-        day_plan_view = DayPlanView(
-            self._root, user)
-        day_plan_view.pack()
+        self._logged_in_user = user
+        self._hide_current_view()
+
+        self._current_view = DayPlanView(
+            self._root,
+            user,
+            self._show_add_plans_view
+        )
+        self._current_view.pack()
 
         self.destroy()
 

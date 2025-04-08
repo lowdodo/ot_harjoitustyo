@@ -1,12 +1,16 @@
 from ui.login_view import LoginView
 from ui.create_user_view import CreateUserView
 from ui.dayplan_view import DayPlanView
+from ui.add_plans_view import AddPlansView
+from services.dayplan_service import DayplanService
 
 
 class UI:
     def __init__(self, root):
         self._root = root
         self._current_view = None
+        self._logged_in_user = None
+        self._dayplan_service = DayplanService()
 
     def start(self):
         self._show_login_view()
@@ -52,7 +56,20 @@ class UI:
         self._current_view.pack()
 
     def _show_day_plan_view(self, user):
+        self._logged_in_user = user
         self._hide_current_view()
 
-        self._current_view = DayPlanView(self._root, user)
+        self._current_view = DayPlanView(
+            self._root,
+            user,
+            self._show_add_plans_view,
+            self._dayplan_service
+        )
         self._current_view.pack()
+
+    def _show_add_plans_view(self):
+        self._hide_current_view()
+
+        self._add_plans_view = AddPlansView(
+            self._root, self._logged_in_user, self._dayplan_service)
+        self._add_plans_view.pack()

@@ -1,5 +1,7 @@
 from entities.user import User
+from entities.task import Task
 from repositories.user_repository import user_repository as default_user_repository
+from repositories.task_repository import task_repository as default_task_repository
 
 
 class InvalidCredentialsError(Exception):
@@ -12,9 +14,10 @@ class UsernameExistsError(Exception):
 
 class DayplanService:
 
-    def __init__(self, user_repository=default_user_repository):
+    def __init__(self, user_repository=default_user_repository, task_repository=default_task_repository):
 
         self._user_repository = user_repository
+        self._task_repository = task_repository
         self._user = None
 
     def login(self, username, password):
@@ -51,3 +54,9 @@ class DayplanService:
             self._user = user
 
         return user
+
+    def create_task(self, task: Task):
+        self._task_repository.create(task)
+
+    def get_tasks_for_user(self, user_id):
+        return self._task_repository.find_all_by_user_id(user_id)

@@ -16,7 +16,6 @@ class CreateUserView:
         self._initialize()
 
     def pack(self):
-        print("ollaan create userissa")
         self._frame.pack(fill=constants.X)
 
     def destroy(self):

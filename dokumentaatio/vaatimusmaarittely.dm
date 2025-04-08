@@ -3,8 +3,8 @@ Sovelluksen on tarkoitus ehdottaa käyttäjälleen suunnitelman päivän työjä
 Käyttäjä voi perusversiossa: 
 - ilmoittaa päivästään ne kohdat, kun on kiireinen
 - arvioida missä kohtaa haluaa nukkumaan/lopettaa päivän tehtävät
-- kuinka kauan haluaa käyttää "avoimen aikavälin" jutuissa tehtäviin
-- lisätä "set time" aikavälin tehtäviä ja niiden aikoja
+- kuinka kauan haluaa käyttää "avoimen aikavälin" jutuissa tehtäviin Done
+- lisätä "set time" aikavälin tehtäviä ja niiden aikoja Done
 
 - kun käyttäjä on ilmoittanut päivän tehtävänsä, sovellus tekee niistä työjärjestysehdotuksen.
 - käyttäjä voi muokata järjestystä halutessaan.
