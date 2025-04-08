@@ -10,3 +10,5 @@
 | 5.4.  | 5h30min | addplansview                                             |
 | 6.4.  | 30min   | testi                                                    |
 | 8.4.  | 4h      | addplansviewieä ja näkymää pääsivulla                    |
+
+yhteensä: 23h15min
