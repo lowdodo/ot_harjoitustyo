@@ -7,7 +7,7 @@ Käyttäjä voi perusversiossa:
 - lisätä "set time" aikavälin tehtäviä ja niiden aikoja Done
 
 - kun käyttäjä on ilmoittanut päivän tehtävänsä, sovellus tekee niistä työjärjestysehdotuksen.
-- käyttäjä voi muokata järjestystä halutessaan.
+- käyttäjä voi muokata järjestystä halutessaan. done
 
 Kehitysideat: 
 - yhdistää apiin esim. fingrid pörssisähköä varten -> milloin kannattaa pyykätä yms

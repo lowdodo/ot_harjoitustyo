@@ -50,4 +50,13 @@ class TaskRepository:
         cursor.execute("DELETE FROM tasks")
         self._connection.commit()
 
+    def update_start_time(self, task_id, new_start_time):
+        cursor = self._connection.cursor()
+        cursor.execute(
+            "UPDATE tasks SET start_time = ? WHERE task_id = ?",
+            (new_start_time, task_id)
+        )
+        self._connection.commit()
+
+
 task_repository = TaskRepository(get_database_connection())

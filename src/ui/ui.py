@@ -3,6 +3,7 @@ from ui.create_user_view import CreateUserView
 from ui.dayplan_view import DayPlanView
 from ui.add_plans_view import AddPlansView
 from services.dayplan_service import DayplanService
+from ui.timeline_view import TaskTimelineView
 
 
 class UI:
@@ -61,9 +62,10 @@ class UI:
 
         self._current_view = DayPlanView(
             self._root,
-            user,
+            self._logged_in_user,
             self._show_add_plans_view,
-            self._dayplan_service
+            self._dayplan_service,
+            self._show_timeline_view
         )
         self._current_view.pack()
 
@@ -71,5 +73,16 @@ class UI:
         self._hide_current_view()
 
         self._add_plans_view = AddPlansView(
-            self._root, self._logged_in_user, self._dayplan_service)
+            self._root, self._logged_in_user, self._dayplan_service, self._show_timeline_view)
         self._add_plans_view.pack()
+
+    def _show_timeline_view(self):
+        self._hide_current_view()
+
+        self._current_view = TaskTimelineView(
+            self._root,
+            self._logged_in_user,
+            self._dayplan_service,
+            self._show_day_plan_view
+        )
+        self._current_view.pack()

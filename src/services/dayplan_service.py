@@ -14,7 +14,9 @@ class UsernameExistsError(Exception):
 
 class DayplanService:
 
-    def __init__(self, user_repository=default_user_repository, task_repository=default_task_repository):
+    def __init__(self,
+                user_repository=default_user_repository,
+                task_repository=default_task_repository):
 
         self._user_repository = user_repository
         self._task_repository = task_repository
@@ -60,3 +62,6 @@ class DayplanService:
 
     def get_tasks_for_user(self, user_id):
         return self._task_repository.find_all_by_user_id(user_id)
+
+    def update_task_start_time(self, task_id, new_start_time):
+        self._task_repository.update_start_time(task_id, new_start_time)

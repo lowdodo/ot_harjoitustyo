@@ -1,6 +1,6 @@
 class Task:
     """Class for tasks of the day
-    
+
     Attributes:
         task_id: id of the created task
         user_id: id of the user that the task is connected to
@@ -8,11 +8,15 @@ class Task:
         type: what kind of task it is
         start_time: optional start time for the task
         duration_minutes: how long the task takes, in minutes
-        
+
     """
 
-
-    def __init__(self, task_id=None, user_id=None, name="", type="open_time", start_time=None, duration_minutes=0):
+    def __init__(self, task_id=None,
+                user_id=None,
+                name="",
+                type="open_time",
+                start_time=None,
+                duration_minutes=0):
         """Constructor for the class
 
         Args:
@@ -30,8 +34,8 @@ class Task:
                 optional, unles set time, when the tasks starts
             duration:
                 how long the task takes to complete
-        
-        
+
+
         """
         self.task_id = task_id
         self.user_id = user_id

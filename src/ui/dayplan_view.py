@@ -2,12 +2,13 @@ from tkinter import ttk, constants
 
 
 class DayPlanView:
-    def __init__(self, root, logged_in_user, show_add_plans_view, dayplan_service):
+    def __init__(self, root, logged_in_user, show_add_plans_view, dayplan_service, show_timeline_view):
         self._root = root
         self._frame = None
         self._logged_in_user = logged_in_user
         self._show_add_plans_view = show_add_plans_view
         self._dayplan_service = dayplan_service
+        self._show_timeline_view = show_timeline_view
         self._task_tree = None
 
         self._initialize()
@@ -21,7 +22,7 @@ class DayPlanView:
 
     def _initialize(self):
         self._frame = ttk.Frame(
-            master=self._root, width=600, height=400, padding=20)
+            master=self._root, width=800, height=600, padding=20)
         self._frame.pack_propagate(False)
 
         title_label = ttk.Label(
@@ -34,8 +35,12 @@ class DayPlanView:
             font=("Arial", 14))
         user_info_label.pack(pady=5)
 
-        self._task_tree = ttk.Treeview(self._frame, columns=(
-            "Name", "Type", "Start", "Duration"), show="headings", height=10)
+        self._task_tree = ttk.Treeview(
+            self._frame,
+            columns=("Name", "Type", "Start", "Duration"),
+            show="headings",
+            height=10
+        )
         for col in ["Name", "Type", "Start", "Duration"]:
             self._task_tree.heading(col, text=col)
             self._task_tree.column(col, width=120)
@@ -47,6 +52,13 @@ class DayPlanView:
             command=self._show_add_plans_view
         )
         add_plans_button.pack(pady=10)
+
+        timeline_button = ttk.Button(
+            master=self._frame,
+            text="View Timeline",
+            command=self._show_timeline_view
+        )
+        timeline_button.pack(pady=5)
 
     def _load_tasks(self):
         for item in self._task_tree.get_children():

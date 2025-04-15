@@ -4,11 +4,12 @@ from entities.task import Task
 
 
 class AddPlansView:
-    def __init__(self, root, logged_in_user, dayplan_service):
+    def __init__(self, root, logged_in_user, dayplan_service, show_timeline_view):
         self._root = root
         self._frame = None
         self._logged_in_user = logged_in_user
         self._dayplan_service = dayplan_service
+        self._show_timeline_view = show_timeline_view
 
         self._tasks = []
         self._total_duration = 0
@@ -22,8 +23,9 @@ class AddPlansView:
         self._frame.destroy()
 
     def _initialize(self):
-        self._frame = ttk.Frame(master=self._root, padding=20)
-        self._frame.grid(row=0, column=0, sticky=constants.NSEW)
+        self._frame = ttk.Frame(
+            master=self._root, width=800, height=600, padding=20)
+        self._frame.pack_propagate(False)
 
         ttk.Label(self._frame, text="Add Day Plan", font=(
             "Arial", 18, "bold")).grid(columnspan=2, pady=10)
@@ -60,7 +62,8 @@ class AddPlansView:
             "Name", "Type", "Start", "Duration"), show="headings")
         for col in ["Name", "Type", "Start", "Duration"]:
             self.task_listbox.heading(col, text=col)
-        self.task_listbox.grid(row=6, columnspan=2, pady=10)
+        self.task_listbox.grid(row=6, columnspan=2,
+                               pady=10, sticky=constants.NSEW)
 
         ttk.Button(self._frame, text="Save All Tasks",
                    command=self._save_tasks).grid(row=7, columnspan=2, pady=10)
@@ -127,3 +130,4 @@ class AddPlansView:
         self._tasks.clear()
         self.task_listbox.delete(*self.task_listbox.get_children())
         self._total_duration = 0
+        self._show_timeline_view()

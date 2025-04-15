@@ -11,3 +11,8 @@
 - Päivitetty **DailtPlanView** näyttämään lisättyjä täskejä
 - Lisätty **1 testi**
 - Lisätty **task repository** tehtäville
+
+## Viikko 5
+
+- Lisätty **AddTimelienView**, jossa taskit näkyy timelinellä ja niiden järjestystä voi muuttaa, myöhemmin antaa ehdotukset yms..
+- Lisätty **testejä**
