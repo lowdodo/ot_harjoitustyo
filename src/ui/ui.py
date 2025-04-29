@@ -73,7 +73,7 @@ class UI:
         self._hide_current_view()
 
         self._add_plans_view = AddPlansView(
-            self._root, self._logged_in_user, self._dayplan_service, self._show_timeline_view)
+            self._root, self._logged_in_user, self._dayplan_service, self._show_timeline_view, self._show_day_plan_view)
         self._add_plans_view.pack()
 
     def _show_timeline_view(self):

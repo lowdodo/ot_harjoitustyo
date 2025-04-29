@@ -6,6 +6,7 @@ def main():
     window = Tk()
     window.title("Day-plan")
 
+    window.attributes("-fullscreen", True)
     ui_view = UI(window)
     ui_view.start()
 

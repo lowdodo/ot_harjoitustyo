@@ -4,12 +4,13 @@ from entities.task import Task
 
 
 class AddPlansView:
-    def __init__(self, root, logged_in_user, dayplan_service, show_timeline_view):
+    def __init__(self, root, logged_in_user, dayplan_service, show_timeline_view, show_dayplan_view):
         self._root = root
         self._frame = None
         self._logged_in_user = logged_in_user
         self._dayplan_service = dayplan_service
         self._show_timeline_view = show_timeline_view
+        self._show_dayplan_view = show_dayplan_view
 
         self._tasks = []
         self._total_duration = 0
@@ -23,11 +24,13 @@ class AddPlansView:
         self._frame.destroy()
 
     def _initialize(self):
-        self._frame = ttk.Frame(
-            master=self._root, width=800, height=600, padding=20)
-        self._frame.pack_propagate(False)
+        self._frame = ttk.Frame(master=self._root)
+        self._frame.pack(fill=constants.BOTH, expand=True)
 
-        ttk.Label(self._frame, text="Add Day Plan", font=(
+        content_frame = ttk.Frame(master=self._frame, padding=20)
+        content_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+        ttk.Label(content_frame, text="Add Day Plan", font=(
             "Arial", 18, "bold")).grid(columnspan=2, pady=10)
 
         self.name_var = StringVar()
@@ -35,38 +38,43 @@ class AddPlansView:
         self.time_var = StringVar()
         self.duration_var = IntVar()
 
-        ttk.Label(self._frame, text="Task Name:").grid(
-            row=1, column=0, sticky=constants.W)
-        ttk.Entry(self._frame, textvariable=self.name_var).grid(
-            row=1, column=1)
+        ttk.Label(content_frame, text="Task Name:").grid(
+            row=1, column=0, sticky=constants.W, padx=5, pady=2)
+        ttk.Entry(content_frame, textvariable=self.name_var).grid(
+            row=1, column=1, padx=5, pady=2)
 
-        ttk.Label(self._frame, text="Task Type:").grid(
-            row=2, column=0, sticky=constants.W)
-        ttk.Combobox(self._frame, values=["set_time", "open_time", "passive"],
-                     textvariable=self.type_var, state="readonly").grid(row=2, column=1)
+        ttk.Label(content_frame, text="Task Type:").grid(
+            row=2, column=0, sticky=constants.W, padx=5, pady=2)
+        ttk.Combobox(content_frame, values=["set_time", "open_time", "passive"],
+                     textvariable=self.type_var, state="readonly").grid(row=2, column=1, padx=5, pady=2)
 
-        ttk.Label(self._frame, text="Start Time (HH:MM):").grid(
-            row=3, column=0, sticky=constants.W)
-        ttk.Entry(self._frame, textvariable=self.time_var).grid(
-            row=3, column=1)
+        ttk.Label(content_frame, text="Start Time (HH:MM):").grid(
+            row=3, column=0, sticky=constants.W, padx=5, pady=2)
+        ttk.Entry(content_frame, textvariable=self.time_var).grid(
+            row=3, column=1, padx=5, pady=2)
 
-        ttk.Label(self._frame, text="Duration (min):").grid(
-            row=4, column=0, sticky=constants.W)
-        ttk.Entry(self._frame, textvariable=self.duration_var).grid(
-            row=4, column=1)
+        ttk.Label(content_frame, text="Duration (min):").grid(
+            row=4, column=0, sticky=constants.W, padx=5, pady=2)
+        ttk.Entry(content_frame, textvariable=self.duration_var).grid(
+            row=4, column=1, padx=5, pady=2)
 
-        ttk.Button(self._frame, text="Add Task", command=self._add_task).grid(
+        ttk.Button(content_frame, text="Add Task", command=self._add_task).grid(
             row=5, columnspan=2, pady=10)
 
-        self.task_listbox = ttk.Treeview(self._frame, columns=(
-            "Name", "Type", "Start", "Duration"), show="headings")
+        self.task_listbox = ttk.Treeview(content_frame, columns=(
+            "Name", "Type", "Start", "Duration"), show="headings", height=6)
         for col in ["Name", "Type", "Start", "Duration"]:
             self.task_listbox.heading(col, text=col)
         self.task_listbox.grid(row=6, columnspan=2,
-                               pady=10, sticky=constants.NSEW)
+                               pady=10, sticky=constants.EW)
 
-        ttk.Button(self._frame, text="Save All Tasks",
-                   command=self._save_tasks).grid(row=7, columnspan=2, pady=10)
+        ttk.Button(content_frame, text="Save All Tasks",
+                   command=self._save_tasks).grid(row=7, columnspan=2, pady=5)
+        ttk.Button(content_frame, text="Back to Day Plan",
+                   command=self._go_back_to_dayplan).grid(row=8, columnspan=2, pady=5)
+
+        ttk.Button(content_frame, text="Exit", command=self._root.quit).grid(
+            row=9, columnspan=2, pady=(10, 0), sticky=constants.EW)
 
     def _add_task(self):
         name = self.name_var.get()
@@ -81,13 +89,19 @@ class AddPlansView:
 
         if task_type == "set_time":
             try:
+                start_time is not None
+            except ValueError:
+                messagebox.showerror(
+                    "Error", "set time must contain a starting time. Add the time or change task type"
+                )
+
+        if start_time:
+            try:
                 datetime.strptime(start_time, "%H:%M")
             except ValueError:
                 messagebox.showerror(
                     "Error", "Start time must be in HH:MM format.")
                 return
-        else:
-            start_time = None
 
         if self._total_duration + int(duration) > 720:
             messagebox.showerror(
@@ -130,4 +144,11 @@ class AddPlansView:
         self._tasks.clear()
         self.task_listbox.delete(*self.task_listbox.get_children())
         self._total_duration = 0
-        self._show_timeline_view()
+
+        self.destroy()
+        self._show_dayplan_view(self._logged_in_user)
+
+    def _go_back_to_dayplan(self):
+        """Navigate back to the Day Plan view without saving tasks."""
+        self.destroy()
+        self._show_dayplan_view(self._logged_in_user)

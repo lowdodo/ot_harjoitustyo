@@ -20,7 +20,7 @@ class LoginView:
         self._initialize()
 
     def pack(self):
-        self._frame.pack(fill=constants.X)
+        self._frame.pack(fill=constants.BOTH, expand=True)
 
     def destroy(self):
         self._frame.destroy()
@@ -71,35 +71,58 @@ class LoginView:
 
     def _initialize(self):
         self._frame = ttk.Frame(master=self._root)
+        self._frame.pack(fill=constants.BOTH, expand=True)
 
         self._error_variable = StringVar(self._frame)
 
+        content_frame = ttk.Frame(master=self._frame)
+        content_frame.place(relx=0.5, rely=0.5,
+                            anchor="center")  # Center the frame
+
         self._error_label = ttk.Label(
-            master=self._frame,
+            master=content_frame,
             textvariable=self._error_variable,
             foreground="red"
         )
+        self._error_label.grid(row=0, column=0, columnspan=2, pady=(0, 10))
 
-        self._error_label.grid(padx=5, pady=5)
+        username_label = ttk.Label(master=content_frame, text="Username")
+        self._username_entry = ttk.Entry(master=content_frame, width=30)
+        username_label.grid(
+            row=1, column=0, sticky=constants.W, padx=5, pady=5)
+        self._username_entry.grid(row=1, column=1, padx=5, pady=5)
 
-        self._initialize_username_field()
-        self._initialize_password_field()
+        password_label = ttk.Label(master=content_frame, text="Password")
+        self._password_entry = ttk.Entry(
+            master=content_frame, width=30, show="*")
+        password_label.grid(
+            row=2, column=0, sticky=constants.W, padx=5, pady=5)
+        self._password_entry.grid(row=2, column=1, padx=5, pady=5)
 
         login_button = ttk.Button(
-            master=self._frame,
+            master=content_frame,
             text="Login",
             command=self._login_handler
         )
-
         create_user_button = ttk.Button(
-            master=self._frame,
+            master=content_frame,
             text="Create user",
             command=self._handle_show_create_user_view
         )
+        exit_button = ttk.Button(
+            master=content_frame,
+            text="Exit",
+            command=self._root.quit
+        )
 
-        self._frame.grid_columnconfigure(0, weight=1, minsize=400)
+        login_button.grid(row=3, column=0, columnspan=2,
+                          padx=5, pady=5, sticky=constants.EW)
+        create_user_button.grid(
+            row=4, column=0, columnspan=2, padx=5, pady=5, sticky=constants.EW)
+        exit_button.grid(row=5, column=0, columnspan=2, padx=5,
+                         pady=(5, 0), sticky=constants.EW)
 
-        login_button.grid(padx=5, pady=5, sticky=constants.EW)
-        create_user_button.grid(padx=5, pady=5, sticky=constants.EW)
+        content_frame.grid_columnconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(1, weight=1)
 
         self._hide_error()

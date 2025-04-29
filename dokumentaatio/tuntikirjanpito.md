@@ -13,5 +13,9 @@
 | 13.4. | 5h      | timeline                                                 |
 
 | 15.4. | 8h | timeline & tests |
+| 20.4. | 5h10min | testejä lisää|
+| 21.4. | 3h | ulkoasua yhtenäiseksi |
+| 24.4. | 1h | parempi timeline|
+| 29.4. | 7h | ehdotusnappi toimisi |
 
-yhteensä: 36h15min
+yhteensä: 52h25min

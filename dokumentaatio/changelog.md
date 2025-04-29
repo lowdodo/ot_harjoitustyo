@@ -16,3 +16,11 @@
 
 - Lisätty **AddTimelienView**, jossa taskit näkyy timelinellä ja niiden järjestystä voi muuttaa, myöhemmin antaa ehdotukset yms..
 - Lisätty **testejä**
+
+## Viikko 6
+
+- Päivitetty **AddTimelienView**, jotta ehdotusnappi toimii
+- aikajanalla päivämäärät eivät enää mene päällekäin vain vierekäin
+- **testikattavuus 60%**
+- kokonäyttötila & paranneltu ulkoasu
+- lisätty docstringiä

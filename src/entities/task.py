@@ -12,11 +12,11 @@ class Task:
     """
 
     def __init__(self, task_id=None,
-                user_id=None,
-                name="",
-                type="open_time",
-                start_time=None,
-                duration_minutes=0):
+                 user_id=None,
+                 name="",
+                 type="open_time",
+                 start_time=None,
+                 duration_minutes=0):
         """Constructor for the class
 
         Args:

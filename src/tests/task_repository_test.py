@@ -109,3 +109,16 @@ def test_find_no_tasks_for_existing_user(test_db):
 
     tasks = task_repository.find_all_by_user_id("2")
     assert len(tasks) == 0
+
+def test_task_time_is_editable(test_db):
+    task = Task(user_id="1", name="task1", type="set_time",
+                start_time="10:00", duration_minutes="30")
+    created_task = task_repository.create(task)
+
+    task_repository.update_start_time(task_id=created_task.task_id, new_start_time="09:00")
+
+    updated_tasks = task_repository.find_all_by_user_id("1")
+    updated_task = next((t for t in updated_tasks if t.task_id == created_task.task_id), None)
+
+    assert updated_task is not None
+    assert updated_task.start_time == "09:00"
