@@ -73,7 +73,12 @@ class AddPlansView:
         ttk.Button(content_frame, text="Back to Day Plan",
                    command=self._go_back_to_dayplan).grid(row=8, columnspan=2, pady=5)
 
-        ttk.Button(content_frame, text="Exit", command=self._root.quit).grid(
+        style = ttk.Style()
+        style.configure("Exit.TButton", foreground="white", background="#d9534f")
+        style.map("Exit.TButton",
+                  background=[('active', '#c9302c'), ('!active', '#d9534f')])
+
+        ttk.Button(content_frame, text="Exit", command=self._root.quit, style="Exit.TButton").grid(
             row=9, columnspan=2, pady=(10, 0), sticky=constants.EW)
 
     def _add_task(self):

@@ -8,18 +8,19 @@ def get_user_by_row(row):
 
 class UserRepository:
     """Class for handling the repository side for users in db
-    """  
+    """
+
     def __init__(self, connection):
         """constructor for the class
 
         Args:
             connection: path for the file that the users are saved
-        """  
+        """
         self._connection = connection
 
     def find_all(self):
         """Returns all users
-        
+
         """
         cursor = self._connection.cursor()
 
@@ -31,7 +32,7 @@ class UserRepository:
 
     def find_by_username(self, username):
         """Returns user by its username
-        
+
         """
         cursor = self._connection.cursor()
 
@@ -46,7 +47,7 @@ class UserRepository:
 
     def create(self, user):
         """Creates a new user to db
-        
+
         """
         cursor = self._connection.cursor()
 
@@ -61,7 +62,7 @@ class UserRepository:
 
     def delete_all(self):
         """Deletes all users from db
-        
+
         """
         cursor = self._connection.cursor()
 

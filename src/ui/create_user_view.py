@@ -16,7 +16,7 @@ class CreateUserView:
         self._initialize()
 
     def pack(self):
-        self._frame.pack(fill=constants.X)
+        self._frame.pack(fill=constants.BOTH, expand=True)
 
     def destroy(self):
         self._frame.destroy()
@@ -44,52 +44,54 @@ class CreateUserView:
         self._error_label.grid_remove()
 
     def _initialize_username_field(self):
-        username_label = ttk.Label(master=self._frame, text="Create username")
-
+        username_label = ttk.Label(master=self._frame, text="Username:")
         self._username_entry = ttk.Entry(master=self._frame)
-
-        username_label.grid(padx=5, pady=5, sticky=constants.W)
-        self._username_entry.grid(padx=5, pady=5, sticky=constants.EW)
+        username_label.grid(row=1, column=0, padx=5, pady=5, sticky=constants.W)
+        self._username_entry.grid(row=1, column=1, padx=5, pady=5, sticky=constants.EW)
 
     def _initialize_password_field(self):
-        password_label = ttk.Label(master=self._frame, text="Create password")
-
-        self._password_entry = ttk.Entry(master=self._frame)
-
-        password_label.grid(padx=5, pady=5, sticky=constants.W)
-        self._password_entry.grid(padx=5, pady=5, sticky=constants.EW)
+        password_label = ttk.Label(master=self._frame, text="Password:")
+        self._password_entry = ttk.Entry(master=self._frame, show="*")
+        password_label.grid(row=2, column=0, padx=5, pady=5, sticky=constants.W)
+        self._password_entry.grid(row=2, column=1, padx=5, pady=5, sticky=constants.EW)
 
     def _initialize(self):
-        self._frame = ttk.Frame(master=self._root)
+        self._frame = ttk.Frame(master=self._root, padding=20)
+        self._frame.grid_columnconfigure(0, weight=1, minsize=120)
+        self._frame.grid_columnconfigure(1, weight=2, minsize=200)
+
+        title_label = ttk.Label(
+            master=self._frame,
+            text="Create New Account",
+            font=("Arial", 18, "bold")
+        )
+        title_label.grid(row=0, column=0, columnspan=2, pady=(0, 15))
 
         self._error_variable = StringVar(self._frame)
-
         self._error_label = ttk.Label(
             master=self._frame,
             textvariable=self._error_variable,
             foreground="red"
         )
-
-        self._error_label.grid(padx=5, pady=5)
+        self._error_label.grid(row=3, column=0, columnspan=2, pady=(0, 5))
 
         self._initialize_username_field()
         self._initialize_password_field()
 
         create_user_button = ttk.Button(
             master=self._frame,
-            text="Create",
-            command=self._create_user_handler
+            text="Create Account",
+            command=self._create_user_handler,
+            width=18
         )
-
         login_button = ttk.Button(
             master=self._frame,
-            text="Login",
-            command=self._handle_show_login_view
+            text="Back to Login",
+            command=self._handle_show_login_view,
+            width=18 
         )
 
-        self._frame.grid_columnconfigure(0, weight=1, minsize=400)
-
-        create_user_button.grid(padx=5, pady=5, sticky=constants.EW)
-        login_button.grid(padx=5, pady=5, sticky=constants.EW)
+        create_user_button.grid(row=4, column=0, columnspan=2, padx=5, pady=(15, 5), sticky=constants.N)
+        login_button.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky=constants.N)
 
         self._hide_error()

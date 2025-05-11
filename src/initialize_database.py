@@ -40,5 +40,5 @@ def initialize_database():
     create_tables(connection)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     initialize_database()

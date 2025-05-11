@@ -24,3 +24,9 @@
 - **testikattavuus 60%**
 - kokonäyttötila & paranneltu ulkoasu
 - lisätty docstringiä
+
+## Viikko 7
+
+- päivitetty **AddTImeLineView** parempiin ehdotuksiin, siirtoon & lisätty ehdotettujen aikojen muutos
+- lisätty testejä
+- paranneltua ulkoasua

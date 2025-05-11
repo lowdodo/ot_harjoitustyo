@@ -15,14 +15,15 @@ def get_task_by_row(row):
 
 class TaskRepository:
     """Class for handling the repository side for tasks of the day
-    """    
+    """
+
     def __init__(self, connection):
         """
         constructor for the class
 
         Args:
             connection: path for the file for tasks
-        
+
         """
         self._connection = connection
 
@@ -30,7 +31,7 @@ class TaskRepository:
         """creates a task to database
 
         returns the task
-        
+
         """
 
         cursor = self._connection.cursor()
@@ -45,7 +46,7 @@ class TaskRepository:
         )
 
         self._connection.commit()
-        task.task_id = cursor.lastrowid 
+        task.task_id = cursor.lastrowid
 
         return task
 
@@ -53,7 +54,7 @@ class TaskRepository:
         """finds all the tasks connected to certain user_id from the database
 
         returns the tasks
-        
+
         """
         cursor = self._connection.cursor()
 
@@ -68,7 +69,7 @@ class TaskRepository:
 
     def delete_all(self):
         """empties the database
-        
+
         """
         cursor = self._connection.cursor()
         cursor.execute("DELETE FROM tasks")
@@ -76,7 +77,7 @@ class TaskRepository:
 
     def delete_task(self, task_id):
         """deletes a specific task by its id
-        
+
         """
         cursor = self._connection.cursor()
         cursor.execute(
@@ -87,7 +88,7 @@ class TaskRepository:
 
     def update_start_time(self, task_id, new_start_time):
         """changes the starttime of a task in db
-        
+
         """
         cursor = self._connection.cursor()
         cursor.execute(
@@ -98,7 +99,7 @@ class TaskRepository:
 
     def update_task(self, task: Task):
         """changes an existing task in db
-        
+
         """
         cursor = self._connection.cursor()
         cursor.execute(

@@ -17,5 +17,8 @@
 | 21.4. | 3h | ulkoasua yhtenäiseksi |
 | 24.4. | 1h | parempi timeline|
 | 29.4. | 7h | ehdotusnappi toimisi |
+| 9.5. | 4h | ehdotusten parantelu|
+| 10.5. | 4.30h | ehdotusten siirtely & ulkoasua |
+| 11.5. | 5h | aikaväli ehdotukselle, uudet testit|
 
-yhteensä: 52h25min
+yhteensä: 65h55min

@@ -18,7 +18,7 @@ class DayplanService:
                  user_repository=default_user_repository,
                  task_repository=default_task_repository):
         """Constructor for the class, creates repositories for the service
-        
+
         Args:
             user_repository: db for users
             task_repository: db for tasks
@@ -31,9 +31,8 @@ class DayplanService:
         """Logs a user in to its account
 
         returns user if username and password matches to an existing user
-        
+
         """
-        print("ollaan loginissa")
         user = self._user_repository.find_by_username(username)
 
         if not user or user.password != password:
@@ -47,7 +46,7 @@ class DayplanService:
         """Gets the user now logged in
 
         returns user
-        
+
         """
 
         return self._user
@@ -69,7 +68,7 @@ class DayplanService:
         """Creates a new user to db
 
         returns the user
-        
+
         """
         existing_user = self._user_repository.find_by_username(username)
 
@@ -77,9 +76,7 @@ class DayplanService:
             raise UsernameExistsError(f"Username {username} already exists")
 
         user = self._user_repository.create(User(None, username, password))
-
-        if login:
-            self._user = user
+        self._user = user
 
         return user
 
@@ -92,7 +89,7 @@ class DayplanService:
     def get_tasks_for_user(self, user_id):
         """
         returns all the tasks connected to certain user_id in db
-        
+
         """
         return self._task_repository.find_all_by_user_id(user_id)
 

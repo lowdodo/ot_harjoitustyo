@@ -60,8 +60,13 @@ class DayPlanView:
         ttk.Button(btn_frame, text="Delete All Tasks",
                    command=self._delete_all_tasks).grid(row=0, column=2, padx=5)
 
+        style = ttk.Style()
+        style.configure("Exit.TButton", foreground="white", background="#d9534f")
+        style.map("Exit.TButton",
+                  background=[('active', '#c9302c'), ('!active', '#d9534f')])
+
         exit_button = ttk.Button(
-            content_frame, text="Exit", command=self._root.quit)
+            content_frame, text="Exit", command=self._root.quit, style="Exit.TButton")
         exit_button.pack(pady=(10, 0), fill=constants.X)
 
     def _load_tasks(self):

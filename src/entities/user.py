@@ -6,7 +6,8 @@ class User:
         nusername: name for user
         password: password to protect the userinfo
 
-    """    
+    """
+
     def __init__(self, user_id=None, username="", password=""):
         """Constructor for the class
 

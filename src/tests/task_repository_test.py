@@ -110,15 +110,52 @@ def test_find_no_tasks_for_existing_user(test_db):
     tasks = task_repository.find_all_by_user_id("2")
     assert len(tasks) == 0
 
+
 def test_task_time_is_editable(test_db):
     task = Task(user_id="1", name="task1", type="set_time",
                 start_time="10:00", duration_minutes="30")
     created_task = task_repository.create(task)
 
-    task_repository.update_start_time(task_id=created_task.task_id, new_start_time="09:00")
+    task_repository.update_start_time(
+        task_id=created_task.task_id, new_start_time="09:00")
 
     updated_tasks = task_repository.find_all_by_user_id("1")
-    updated_task = next((t for t in updated_tasks if t.task_id == created_task.task_id), None)
+    updated_task = next(
+        (t for t in updated_tasks if t.task_id == created_task.task_id), None)
 
     assert updated_task is not None
     assert updated_task.start_time == "09:00"
+
+
+def test_update_duration_minutes(test_db):
+    task = Task(user_id="1", name="duration_task", type="set_time",
+                start_time="12:00", duration_minutes="20")
+    created_task = task_repository.create(task)
+    created_task.duration_minutes = 45
+    task_repository.update_task(created_task)
+
+    updated_task = next(
+        (t for t in task_repository.find_all_by_user_id("1") if t.task_id == created_task.task_id), None)
+    assert updated_task is not None
+    assert updated_task.duration_minutes == 45
+
+
+def test_update_nonexistent_task_does_nothing(test_db):
+    result = task_repository.update_start_time(task_id=9999, new_start_time="08:00")
+    assert result is None or result is False
+
+
+def test_create_task_with_minimal_fields(test_db):
+    task = Task(user_id="3", name="minimal", type="passive", duration_minutes=5)
+    created = task_repository.create(task)
+    assert created is not None
+    assert created.name == "minimal"
+    assert created.start_time is None
+
+def test_delete_single_task(test_db):
+    task = Task(user_id="1", name="delete_me", type="passive", duration_minutes="10")
+    created_task = task_repository.create(task)
+    task_repository.delete_task(created_task.task_id)
+
+    tasks = task_repository.find_all_by_user_id("1")
+    assert all(t.task_id != created_task.task_id for t in tasks)
