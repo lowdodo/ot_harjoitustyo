@@ -46,14 +46,18 @@ class CreateUserView:
     def _initialize_username_field(self):
         username_label = ttk.Label(master=self._frame, text="Username:")
         self._username_entry = ttk.Entry(master=self._frame)
-        username_label.grid(row=1, column=0, padx=5, pady=5, sticky=constants.W)
-        self._username_entry.grid(row=1, column=1, padx=5, pady=5, sticky=constants.EW)
+        username_label.grid(row=1, column=0, padx=5,
+                            pady=5, sticky=constants.W)
+        self._username_entry.grid(
+            row=1, column=1, padx=5, pady=5, sticky=constants.EW)
 
     def _initialize_password_field(self):
         password_label = ttk.Label(master=self._frame, text="Password:")
         self._password_entry = ttk.Entry(master=self._frame, show="*")
-        password_label.grid(row=2, column=0, padx=5, pady=5, sticky=constants.W)
-        self._password_entry.grid(row=2, column=1, padx=5, pady=5, sticky=constants.EW)
+        password_label.grid(row=2, column=0, padx=5,
+                            pady=5, sticky=constants.W)
+        self._password_entry.grid(
+            row=2, column=1, padx=5, pady=5, sticky=constants.EW)
 
     def _initialize(self):
         self._frame = ttk.Frame(master=self._root, padding=20)
@@ -88,10 +92,12 @@ class CreateUserView:
             master=self._frame,
             text="Back to Login",
             command=self._handle_show_login_view,
-            width=18 
+            width=18
         )
 
-        create_user_button.grid(row=4, column=0, columnspan=2, padx=5, pady=(15, 5), sticky=constants.N)
-        login_button.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky=constants.N)
+        create_user_button.grid(
+            row=4, column=0, columnspan=2, padx=5, pady=(15, 5), sticky=constants.N)
+        login_button.grid(row=5, column=0, columnspan=2,
+                          padx=5, pady=5, sticky=constants.N)
 
         self._hide_error()

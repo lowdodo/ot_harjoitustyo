@@ -14,6 +14,7 @@ class UsernameExistsError(Exception):
 
 class DayplanService:
     """Class for app logic"""
+
     def __init__(self,
                  user_repository=default_user_repository,
                  task_repository=default_task_repository):
@@ -64,7 +65,7 @@ class DayplanService:
         """
         self._user = None
 
-    def create_user(self, username, password, login=True):
+    def create_user(self, username, password):
         """Creates a new user to db
 
         returns the user

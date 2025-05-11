@@ -141,19 +141,23 @@ def test_update_duration_minutes(test_db):
 
 
 def test_update_nonexistent_task_does_nothing(test_db):
-    result = task_repository.update_start_time(task_id=9999, new_start_time="08:00")
+    result = task_repository.update_start_time(
+        task_id=9999, new_start_time="08:00")
     assert result is None or result is False
 
 
 def test_create_task_with_minimal_fields(test_db):
-    task = Task(user_id="3", name="minimal", type="passive", duration_minutes=5)
+    task = Task(user_id="3", name="minimal",
+                type="passive", duration_minutes=5)
     created = task_repository.create(task)
     assert created is not None
     assert created.name == "minimal"
     assert created.start_time is None
 
+
 def test_delete_single_task(test_db):
-    task = Task(user_id="1", name="delete_me", type="passive", duration_minutes="10")
+    task = Task(user_id="1", name="delete_me",
+                type="passive", duration_minutes="10")
     created_task = task_repository.create(task)
     task_repository.delete_task(created_task.task_id)
 

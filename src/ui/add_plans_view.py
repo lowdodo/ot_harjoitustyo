@@ -74,7 +74,8 @@ class AddPlansView:
                    command=self._go_back_to_dayplan).grid(row=8, columnspan=2, pady=5)
 
         style = ttk.Style()
-        style.configure("Exit.TButton", foreground="white", background="#d9534f")
+        style.configure("Exit.TButton", foreground="white",
+                        background="#d9534f")
         style.map("Exit.TButton",
                   background=[('active', '#c9302c'), ('!active', '#d9534f')])
 

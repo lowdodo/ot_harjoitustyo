@@ -87,12 +87,15 @@ class LoginView:
 
         username_label = ttk.Label(master=content_frame, text="Username")
         self._username_entry = ttk.Entry(master=content_frame, width=30)
-        username_label.grid(row=1, column=0, sticky=constants.W, padx=5, pady=5)
+        username_label.grid(
+            row=1, column=0, sticky=constants.W, padx=5, pady=5)
         self._username_entry.grid(row=1, column=1, padx=5, pady=5)
 
         password_label = ttk.Label(master=content_frame, text="Password")
-        self._password_entry = ttk.Entry(master=content_frame, width=30, show="*")
-        password_label.grid(row=2, column=0, sticky=constants.W, padx=5, pady=5)
+        self._password_entry = ttk.Entry(
+            master=content_frame, width=30, show="*")
+        password_label.grid(
+            row=2, column=0, sticky=constants.W, padx=5, pady=5)
         self._password_entry.grid(row=2, column=1, padx=5, pady=5)
 
         login_button = ttk.Button(
@@ -107,7 +110,8 @@ class LoginView:
         )
 
         style = ttk.Style()
-        style.configure("Exit.TButton", foreground="white", background="#d9534f")
+        style.configure("Exit.TButton", foreground="white",
+                        background="#d9534f")
         style.map("Exit.TButton",
                   background=[('active', '#c9302c'), ('!active', '#d9534f')])
 
@@ -118,9 +122,12 @@ class LoginView:
             style="Exit.TButton"
         )
 
-        login_button.grid(row=3, column=0, columnspan=2, padx=5, pady=5, sticky=constants.EW)
-        create_user_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5, sticky=constants.EW)
-        exit_button.grid(row=5, column=0, columnspan=2, padx=5, pady=(5, 0), sticky=constants.EW)
+        login_button.grid(row=3, column=0, columnspan=2,
+                          padx=5, pady=5, sticky=constants.EW)
+        create_user_button.grid(
+            row=4, column=0, columnspan=2, padx=5, pady=5, sticky=constants.EW)
+        exit_button.grid(row=5, column=0, columnspan=2, padx=5,
+                         pady=(5, 0), sticky=constants.EW)
 
         content_frame.grid_columnconfigure(0, weight=1)
         content_frame.grid_columnconfigure(1, weight=1)

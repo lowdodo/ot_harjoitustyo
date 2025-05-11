@@ -28,7 +28,7 @@ class TaskTimelineView:
     def destroy(self):
         self._frame.destroy()
 
-#timelinen tyylittelyyn ja scrollattavuuteen käytetty apuna chatgpt:tä
+# timelinen tyylittelyyn ja scrollattavuuteen käytetty apuna chatgpt:tä
     def _initialize(self):
         self._frame = Frame(master=self._root)
         self._frame.pack(fill=constants.BOTH, expand=True)
@@ -56,29 +56,35 @@ class TaskTimelineView:
         self.canvas.bind("<B1-Motion>", self._on_drag)
         self.canvas.bind("<ButtonRelease-1>", self._on_release)
 
-        self.suggest_button = ttk.Button(content_frame, text="Suggest Timetable", command=self._suggest_timetable)
+        self.suggest_button = ttk.Button(
+            content_frame, text="Suggest Timetable", command=self._suggest_timetable)
         self.suggest_button.pack(pady=5)
 
-        self.save_button = ttk.Button(content_frame, text="Save Suggestion", command=self._save_suggestion)
+        self.save_button = ttk.Button(
+            content_frame, text="Save Suggestion", command=self._save_suggestion)
 
         ttk.Label(content_frame, text="Suggestion start hour:").pack()
-        ttk.Spinbox(content_frame, from_=0, to=23, textvariable=self.start_hour_var, width=5).pack()
+        ttk.Spinbox(content_frame, from_=0, to=23,
+                    textvariable=self.start_hour_var, width=5).pack()
 
         ttk.Label(content_frame, text="Suggestion end hour:").pack()
-        ttk.Spinbox(content_frame, from_=1, to=24, textvariable=self.end_hour_var, width=5).pack()
+        ttk.Spinbox(content_frame, from_=1, to=24,
+                    textvariable=self.end_hour_var, width=5).pack()
 
         ttk.Button(content_frame, text="Back",
                    command=self._go_back_to_dayplan).pack(pady=5)
-        
+
         style = ttk.Style()
-        style.configure("Exit.TButton", foreground="white", background="#d9534f")
+        style.configure("Exit.TButton", foreground="white",
+                        background="#d9534f")
         style.map("Exit.TButton",
                   background=[('active', '#c9302c'), ('!active', '#d9534f')])
 
         ttk.Button(content_frame, text="Exit",
                    command=self._root.quit, style="Exit.TButton").pack(pady=5)
 
-        self.status_label = Label(content_frame, text="", fg="red", font=("Arial", 10))
+        self.status_label = Label(
+            content_frame, text="", fg="red", font=("Arial", 10))
         self.status_label.pack(pady=5)
 
     def _go_back_to_dayplan(self):
@@ -131,7 +137,8 @@ class TaskTimelineView:
             task = self._task_rects[item]["task"]
 
             if task.type == "set_time":
-                self.status_label.config(text=f"Task '{task.name}' is of type 'set_time', time cannot be changed.")
+                self.status_label.config(
+                    text=f"Task '{task.name}' is of type 'set_time', time cannot be changed.")
                 self._drag_data = {"item": None, "y_offset": 0}
                 self._load_tasks()
                 return
@@ -139,10 +146,12 @@ class TaskTimelineView:
             canvas_y = self.canvas.canvasy(event.y)
             new_y = self.canvas.coords(item)[1]
             new_minutes = (new_y / 40) * 60
-            new_time = (datetime(2000, 1, 1) + timedelta(minutes=new_minutes)).strftime("%H:%M")
+            new_time = (datetime(2000, 1, 1) +
+                        timedelta(minutes=new_minutes)).strftime("%H:%M")
 
             task.start_time = new_time
-            self._dayplan_service.update_task_start_time(task.task_id, new_time)
+            self._dayplan_service.update_task_start_time(
+                task.task_id, new_time)
 
         self._drag_data = {"item": None, "y_offset": 0}
         self._load_tasks()
@@ -178,7 +187,8 @@ class TaskTimelineView:
         start_hour = self.start_hour_var.get()
         end_hour = self.end_hour_var.get()
         if start_hour >= end_hour:
-            self.status_label.config(text="Start hour must be before end hour.")
+            self.status_label.config(
+                text="Start hour must be before end hour.")
             return
 
         earliest = start_hour * 60
@@ -192,7 +202,7 @@ class TaskTimelineView:
                     for i in range(start_min, start_min + dur_min):
                         occupied[i] = True
                     task.start_time = (datetime(2000, 1, 1) +
-                                    timedelta(minutes=start_min)).strftime("%H:%M")
+                                       timedelta(minutes=start_min)).strftime("%H:%M")
                     self._dayplan_service.update_task_start_time(
                         task.task_id, task.start_time)
                     start_y = (start_min / 60) * 40
@@ -202,7 +212,8 @@ class TaskTimelineView:
                     break
             if not found:
                 task.start_time = None
-                self._dayplan_service.update_task_start_time(task.task_id, None)
+                self._dayplan_service.update_task_start_time(
+                    task.task_id, None)
                 self.status_label.config(text=f"No room for task: {task.name}")
                 start_y = 850 + len(self._task_rects) * 45
                 height = max((task.duration_minutes / 60) * 40, 30)
@@ -213,7 +224,7 @@ class TaskTimelineView:
             dur = task.duration_minutes
             height = max((dur / 60) * 40, 30)
             task.start_time = (datetime(2000, 1, 1) +
-                            timedelta(minutes=passive_y)).strftime("%H:%M")
+                               timedelta(minutes=passive_y)).strftime("%H:%M")
             self._dayplan_service.update_task_start_time(
                 task.task_id, task.start_time)
             self._draw_task(task, (passive_y / 60) * 40, height)
@@ -225,9 +236,11 @@ class TaskTimelineView:
     def _save_suggestion(self):
         for task in self._tasks:
             if task.start_time:
-                self._dayplan_service.update_task_start_time(task.task_id, task.start_time)
+                self._dayplan_service.update_task_start_time(
+                    task.task_id, task.start_time)
 
-        self.status_label.config(text="Suggested timetable saved successfully.")
+        self.status_label.config(
+            text="Suggested timetable saved successfully.")
 
         self._load_tasks()
 
